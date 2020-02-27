@@ -5,13 +5,13 @@
 int comp = 0;
 int mov = 0;
 
-void funcrandom(long long int* a, int n) {              //генерациЯ массива в произвольном порЯдке
+void funcrandom(long long int* a, int n) {              //РіРµРЅРµСЂР°С†РёСЏ РјР°СЃСЃРёРІР° РІ РїСЂРѕРёР·РІРѕР»СЊРЅРѕРј РїРѕСЂСЏРґРєРµ
     for (int i = 0; i < n; i++) {
         a[i] = (long long int)rand() * rand() * rand();
     }
 }
 
-void funcright(long long int* a, int n) {               //генерациЯ отсортирпованного масива
+void funcright(long long int* a, int n) {               //РіРµРЅРµСЂР°С†РёСЏ РѕС‚СЃРѕСЂС‚РёСЂРѕРІР°РЅРЅРѕРіРѕ РјР°СЃСЃРёРІР°
     int sign;
     for (int i = 0; i < n; i++) {
          if (i == 0) {
@@ -19,12 +19,12 @@ void funcright(long long int* a, int n) {               //генерациЯ отсортирпова
          } else {
              sign = rand() % 2;
              if (!sign) sign = -1;
-             a[i] = (long long int)(labs(a[i - 1]) + (long long int)rand() * rand() % (9223372036854775808 - a[i - 1])) * sign;
+             a[i] = (long long int)((labs(a[i - 1]) + rand() * rand() % (9223372036854775808 - labs(a[i - 1]))) * sign);
          }
     }
 }
 
-void funcback(long long int* a, int n) {                //генерациЯ массива, отстортированного в обратном порЯдке
+void funcback(long long int* a, int n) {                //РіРµРЅРµСЂР°С†РёСЏ РјР°СЃСЃРёРІР°, РѕС‚СЃРѕСЂС‚РёСЂРѕРІР°РЅРЅРѕРіРѕ РІ РѕР±СЂР°С‚РЅРѕРј РїРѕСЂСЏРґРєРµ
     int sign;
     for (int i = 0; i < n; i++) {
          if (i == 0) {
@@ -32,12 +32,12 @@ void funcback(long long int* a, int n) {                //генерациЯ массива, отс
          } else {
              sign = rand() % 2;
              if (!sign) sign = -1;
-             a[i] = (long long int)((labs(a[i - 1]) - (long long int)rand() * rand() % a[i - 1]) * sign);
+             a[i] = (long long int)((labs(a[i - 1]) - (long long int)rand() * rand() % labs(a[i - 1])) * sign);
          }
     }
 }
 
-void bubble(long long int* a, int n) {                  //сортировка "пузырек"
+void bubble(long long int* a, int n) {                  //СЃРѕСЂС‚РёСЂРѕРІРєР° "РїСѓР·С‹СЂРµРє"
     for (int i = 0; i < n - 1; i++) {
         for (int j = 0; j < n - 1 - i; j++) {
             comp++;
@@ -51,19 +51,19 @@ void bubble(long long int* a, int n) {                  //сортировка "пузырек"
     }
 }
 
-void heapify(long long int* a, int n, int i) {          //построение кучи(просеивание максимального элемента вверх)
-    int largest = i;        //максимальный элемент(корень)
-    int l = 2 * i + 1;      //индекс левого ребенка
-    int r = 2 * i + 2;      //индекс правого ребенка
-    if (l < n) {                                        //сравниваем максимальный элемент и левого ребенка
+void heapify(long long int* a, int n, int i) {          //РїРѕСЃС‚СЂРѕРµРЅРёРµ РєСѓС‡Рё(РїСЂРѕСЃРµРёРІР°РЅРёРµ РјР°РєСЃРёРјР°Р»СЊРЅРѕРіРѕ СЌР»РµРјРµРЅС‚Р° РІРІРµСЂС…)
+    int largest = i;        //РјР°РєСЃРёРјР°Р»СЊРЅС‹Р№ СЌР»РµРјРµРЅС‚(РєРѕСЂРµРЅСЊ)
+    int l = 2 * i + 1;      //РёРЅРґРµРєСЃ Р»РµРІРѕРіРѕ СЂРµР±РµРЅРєР°
+    int r = 2 * i + 2;      //РёРЅРґРµРєСЃ РїСЂР°РІРѕРіРѕ СЂРµР±РµРЅРєР°
+    if (l < n) {                                        //СЃСЂР°РІРЅРёРІР°РµРј РјР°РєСЃРёРјР°Р»СЊРЅС‹Р№ СЌР»РµРјРµРЅС‚ Рё Р»РµРІРѕРіРѕ СЂРµР±РµРЅРєР°
         comp++;
         if (labs(a[l]) > labs(a[largest])) largest = l;
     }
-    if (r < n) {                                        //сравниваем максимальный элемент и правого ребенка
+    if (r < n) {                                        //СЃСЂР°РІРЅРёРІР°РµРј РјР°РєСЃРёРјР°Р»СЊРЅС‹Р№ СЌР»РµРјРµРЅС‚ Рё РїСЂР°РІРѕРіРѕ СЂРµР±РµРЅРєР°
         comp++;
         if (labs(a[r]) > labs(a[largest])) largest = r;
     }
-    if (largest != i) {                                 //менЯем местами максимальный элемент и корень(если они не совпадают)
+    if (largest != i) {                                 //РјРµРЅСЏРµРј РјРµСЃС‚Р°РјРё РјР°РєСЃРёРјР°Р»СЊРЅС‹Р№ СЌР»РµРјРµРЅС‚ Рё РєРѕСЂРµРЅСЊ(РµСЃР»Рё РѕРЅРё РЅРµ СЃРѕРІРїР°РґР°СЋС‚)
         mov++;
         a[largest] += a[i];
         a[i] = a[largest] - a[i];
@@ -72,20 +72,20 @@ void heapify(long long int* a, int n, int i) {          //построение кучи(просеи
     }
 }
 void pyramid(long long int* a, int n) {
-    for (int i = n / 2 - 1; i >= 0; i--)                //формируем кучу
+    for (int i = n / 2 - 1; i >= 0; i--)                //С„РѕСЂРјРёСЂСѓРµРј РєСѓС‡Сѓ
         heapify(a, n, i);
-    for (int i = n - 1; i > 0; i--) {                   //менЯем местами корень и последний элемент в куче и выкидываем его из кучи
+    for (int i = n - 1; i > 0; i--) {                   //РјРµРЅСЏРµРј РјРµСЃС‚Р°РјРё РєРѕСЂРµРЅСЊ Рё РїРѕСЃР»РµРґРЅРёР№ СЌР»РµРјРµРЅС‚ РІ РєСѓС‡Рµ Рё РІС‹РєРёРґС‹РІР°РµРј РµРіРѕ РёР· РєСѓС‡Рё
         mov++;
         a[0] += a[i];
         a[i] = a[0] - a[i];
         a[0] = a[0] - a[i];
-        heapify(a, i, 0);                               //опЯть формируем кучу(просеиваем корень вниз)
+        heapify(a, i, 0);                               //РѕРїСЏС‚СЊ С„РѕСЂРјРёСЂСѓРµРј РєСѓС‡Сѓ(РїСЂРѕСЃРµРёРІР°РµРј РєРѕСЂРµРЅСЊ РІРЅРёР·)
     }
 }
 
 int main(void) {
     srand(time(NULL));
-    printf("1.Bubble:\n");                              //сортировка "пузырек" и вывод данных
+    printf("1.Bubble:\n");                              //СЃРѕСЂС‚РёСЂРѕРІРєР° "РїСѓР·С‹СЂРµРє" Рё РІС‹РІРѕРґ РґР°РЅРЅС‹С…
     for (int n = 10; n <= 10000; n *= 10) {
         printf("  n = %d\n", n);
         long long int* a = calloc(n, sizeof(long long int));
@@ -107,7 +107,7 @@ int main(void) {
         comp = 0, mov = 0;
         free(a);
     }
-    printf("2.Pyramidal sorting:\n");                   //пирамидальнаЯ сортировка и вывод данных
+    printf("2.Pyramidal sorting:\n");                   //РїРёСЂР°РјРёРґР°Р»СЊРЅР°СЏ СЃРѕСЂС‚РёСЂРѕРІРєР° Рё РІС‹РІРѕРґ РґР°РЅРЅС‹С…
     for (int n = 10; n <= 10000; n *= 10) {
         printf("  n = %d\n", n);
         long long int* a = calloc(n, sizeof(long long int));
